@@ -1,0 +1,69 @@
+$login-background-color: #F3F4F9;
+$input-background-color: #fff;
+
+
+.login-row {
+    margin: 80px 0;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    background-color: $login-background-color;
+}
+
+.login-row__form {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form__title {
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.login-form__form {
+    text-align: center;
+
+    .form__input {
+        padding: 20px;
+        margin: 20px 0;
+        width: 300px;
+        font-size: 14px;
+        border-radius: 10px;
+        background-color: $input-background-color;
+    }
+
+    .show-password {
+        width: 300px;
+        margin: 0 auto;
+        font-size: 14px;
+        color: #3b3b3b;
+    }
+
+    .form__show-password {
+        margin-right: 10px;
+        margin-bottom: 40px;
+    }
+
+    .create-account {
+        color: #000;
+        opacity: .8;
+        padding-left: 25px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.side-background {
+    height: 600px;
+    width: 50%;
+    border-radius: 15px;
+    background-image: url('/photos/library.avif');
+    background-position: center;
+    background-size: cover;
+}

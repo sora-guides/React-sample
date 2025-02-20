@@ -1,0 +1,22 @@
+/* Imports and variables */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+
+$roboto-font: "Roboto Flex", sans-serif;
+
+
+/* Common styles */
+
+html, body {
+    font-family: $roboto-font;
+    
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
