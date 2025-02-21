@@ -1,0 +1,15 @@
+$background-color: #2A3037;
+$font-color: #99A0A7;
+
+
+.side-menu {
+    width: 17%;
+    margin: 20px 10px 20px;
+    padding: 10px 50px 10px;
+    border-radius: 10px;
+    background-color: $background-color;
+}
+
+.side-menu-row {
+    color: $font-color;
+}

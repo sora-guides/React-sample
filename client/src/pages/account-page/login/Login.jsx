@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../context/AuthContext'
+import toast, { Toaster } from 'react-hot-toast'
 
 import Button from '../../../components/button/Button'
 
@@ -16,12 +17,28 @@ export default function Login() {
 
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault()
-        login(email, password)
-        navigate("/")
-    }, [ email, password ])
+
+        await toast.promise(
+            login(email, password),
+            {
+                loading: "Loading...",
+                success: "Logged in successfully!",
+                error: "User with given credentials are not found"
+            },
+            {
+                error: {
+                    duration: 2500
+                }
+            }
+        )
+        setTimeout(() => {
+            navigate("/")
+        }, 2000)
+    }, [ email, password, login, navigate])
 
     return (
         <div className="login">
+            <Toaster />
             <div className="container">
                 <div className="login-row">
                     <div className="login-form">
@@ -35,7 +52,7 @@ export default function Login() {
                                 onChange={ (event) => { setEmail(event.target.value) } }
                             />
                             <input 
-                                type={ !showPassword ? "password" : "text" } 
+                                type={ !showPassword ? "password" : "text" }
                                 placeholder="Password" 
                                 className="form__input"
                                 value={ password }
@@ -57,7 +74,10 @@ export default function Login() {
                                 </Link>
                                 <br />
                             </label>
-                            <Button className="btn-large" type="Submit">
+                            <Button 
+                                className="btn-large" 
+                                type="Submit"
+                            >
                                 Submit
                             </Button>
                         </form>

@@ -7,10 +7,10 @@ import './Nav.scss'
 
 
 export default function Nav() {
-    const { logout } = useAuth()
+    const { isAuthenticated, logout } = useAuth()
     const [ profile, setProfile ] = useState(null)
-    const [ isAuthenticated, setIsAuthenticated ] = useState(false)
-
+    const [ isOpen, setIsOpen ] = useState(false)
+    
     const fetchUser = useCallback(async () => {
         try {
             const response = await fetch("http://localhost:8000/api/v1/profile", {
@@ -27,18 +27,19 @@ export default function Nav() {
 
             if (response.status === 200) {
                 const data = await response.json()
-                setIsAuthenticated(true)
                 setProfile(data)
             }
         } catch (error) {
             console.log("Error occured while getting profile: ", error.message, error.status)
-            setIsAuthenticated(false)
         }
     }, [ ])
 
     useEffect(() => {
-        fetchUser()
-    }, [ fetchUser ])
+        console.log(isAuthenticated)
+        if (isAuthenticated) {
+            fetchUser()
+        }
+    }, [ isAuthenticated, fetchUser ])
 
     return (
         <nav className="nav">
@@ -63,11 +64,24 @@ export default function Nav() {
                         </Fragment>
                     ) : (
                         <Fragment>
-                            <li className="nav-list__item">
-                                <Button>
-                                    <img src={ profile.profile_photo } alt="user-pfp.image" className="btn-profile" />
-                                </Button>
-                            </li>
+                            { profile && (
+                                <li className="nav-list__item">
+                                    <Button onClick={ () => { setIsOpen(!isOpen) } }>
+                                        <img src={ profile.profile_photo } alt="user-pfp.image" className="btn-profile" />
+                                    </Button>
+                                    { isOpen && (
+                                        <div className="drop-down">
+                                            <p className="drop-down__profile-name">{ profile.username }</p>
+                                            <Button
+                                                onClick={ () => { logout(); setIsOpen(!isOpen) } }
+                                                className="drop-down__btn"
+                                            >
+                                                Log out
+                                            </Button>
+                                        </div>
+                                    ) }
+                                </li>
+                            ) }
                         </Fragment>
                     ) }
                     </ul>
