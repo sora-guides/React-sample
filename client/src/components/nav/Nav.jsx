@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, Fragment } from "react"
 import { Link } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
+import toast, { Toaster } from 'react-hot-toast'
 import Button from "../button/Button"
 
 import './Nav.scss'
@@ -43,6 +44,7 @@ export default function Nav() {
 
     return (
         <nav className="nav">
+            <Toaster />
             <div className="container">
                 <div className="nav-row">
                     <Link to="/" className="logo">
@@ -73,8 +75,12 @@ export default function Nav() {
                                         <div className="drop-down">
                                             <p className="drop-down__profile-name">{ profile.username }</p>
                                             <Button
-                                                onClick={ () => { logout(); setIsOpen(!isOpen) } }
                                                 className="drop-down__btn"
+                                                onClick={ () => { 
+                                                    logout() 
+                                                    setIsOpen(!isOpen)
+                                                    toast("Good bye", { icon: "👋🏻" }) 
+                                                } }
                                             >
                                                 Log out
                                             </Button>

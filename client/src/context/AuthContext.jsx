@@ -1,4 +1,5 @@
 import { useContext, createContext, useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 
 const AuthContext = createContext()
@@ -60,6 +61,27 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(false)
         } catch (error) {
             console.log("An error occured while loging out: ", error)
+        }
+    }
+
+    async function refreshToken() {
+        const navigate = useNavigate()
+
+        try {
+            const response = await fetch(baseUrl + "refresh/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+            })
+
+            if (!response.ok) {
+                throw new Error("Failed to refresh token")
+            }
+        } catch (error) {
+            console.log("Error refreshing token: ", error)
+            navigate("/login")
         }
     }
 
